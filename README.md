@@ -1,6 +1,12 @@
-# CloudFormation Purge CLI
+# CF Purge - Bulk CloudFormation Stacks Deletion
 
 Delete one or more CloudFormation stacks (that match a glob-pattern string) from an AWS account
+
+## Usage
+
+1. Clone the repo
+2. `go get`
+3. `go run . --glob "*-some-glob-pattern-*"`
 
 # Contributions
 

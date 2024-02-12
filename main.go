@@ -12,6 +12,8 @@ import (
 	"strings"
 )
 
+// @TODO Cleanup this file and split it into multiple files
+
 func main() {
 	app := &cli.App{
 		Name:  "cf-purge",

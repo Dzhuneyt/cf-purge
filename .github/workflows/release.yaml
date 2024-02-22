@@ -34,3 +34,4 @@ jobs:
           binary_name: "cf-purge"
           extra_files: LICENSE README.md
           compress_assets: "OFF"
+          asset_name: cf-purge-${{ matrix.goos }}-${{ matrix.goarch }}

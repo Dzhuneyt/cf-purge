@@ -14,7 +14,7 @@ suffix, or contain a string in their name.
 _MacOS:_
 
 ```bash
-curl -Los cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-darwin-$(uname -m)"
+curl -Lo cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-darwin-$(uname -m)"
 chmod +x cf-purge
 sudo mv cf-purge /usr/local/bin/
 ```
@@ -22,7 +22,7 @@ sudo mv cf-purge /usr/local/bin/
 _Linux:_
 
 ```bash
-curl -Los cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-linux-$(uname -m)"
+curl -Lo cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-linux-$(uname -m)"
 chmod +x cf-purge
 sudo mv cf-purge /usr/local/bin/
 ```

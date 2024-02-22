@@ -1,3 +1,5 @@
+![](./docs/cf-purge.webp)
+
 # CF Purge
 
 Quickly delete multiple CloudFormation stacks as a bulk operation.

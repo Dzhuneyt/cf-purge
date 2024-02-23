@@ -14,7 +14,7 @@ suffix, or contain a string in their name.
 _MacOS:_
 
 ```bash
-curl -Lo cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-darwin-$(uname -m)"
+curl -Lof cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-darwin-$(uname -m)"
 chmod +x cf-purge
 sudo mv cf-purge /usr/local/bin/
 ```
@@ -22,7 +22,14 @@ sudo mv cf-purge /usr/local/bin/
 _Linux:_
 
 ```bash
-curl -Lo cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-linux-$(uname -m)"
+architecture=""
+case $(uname -m) in
+    i386 | i686)   architecture="386" ;;
+    x86_64) architecture="amd64" ;;
+    arm)    dpkg --print-architecture | grep -q "arm64" && architecture="arm64" || architecture="arm64" ;;
+    *)   echo "Unable to determine system architecture."; exit 1 ;;
+esac
+curl -Lof cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-linux-${architecture}"
 chmod +x cf-purge
 sudo mv cf-purge /usr/local/bin/
 ```

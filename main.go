@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Dzhuneyt/cf-purge/utils"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/cloudformation"
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 // @TODO Cleanup this file and split it into multiple files
@@ -39,10 +39,16 @@ func main() {
 }
 
 func purgeStacks(globalPattern string) {
-	// Load the Shared AWS Configuration (~/.aws/config)
+	// Load credentials from the environment
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to load AWS configuration:", err)
+	}
+
+	// Check if AWS credentials are available
+	_, err = cfg.Credentials.Retrieve(context.TODO())
+	if err != nil {
+		log.Fatal("Failed to retrieve AWS credentials:", err)
 	}
 
 	cloudformationClient := cloudformation.NewFromConfig(cfg)
@@ -61,10 +67,35 @@ func purgeStacks(globalPattern string) {
 		for _, stack := range output.StackSummaries {
 			stackName := *stack.StackName
 
+			// Check if the stack name matches the glob pattern
 			matched, _ := filepath.Match(globalPattern, stackName)
-			if matched {
-				stacks = append(stacks, stackName)
+			if !matched {
+				continue
 			}
+
+			// Check if the stack is in any of the denylisted status
+			var blacklistedStatuses = []string{
+				"CREATE_IN_PROGRESS",
+				"DELETE_IN_PROGRESS",
+				"DELETE_FAILED",
+				"DELETE_COMPLETE",
+				// TODO add more statuses if needed
+			}
+
+			isBlackListed := false
+			for _, status := range blacklistedStatuses {
+				if status == string(stack.StackStatus) {
+					fmt.Printf("Skipping stack %s with status %s\n", stackName, stack.StackStatus)
+					isBlackListed = true
+					break
+				}
+			}
+
+			if isBlackListed {
+				continue
+			}
+
+			stacks = append(stacks, stackName)
 		}
 		pageNum++
 	}
@@ -84,7 +115,7 @@ func purgeStacks(globalPattern string) {
 	fmt.Println()
 	fmt.Println("Please, confirm that you want to delete these stacks irreversibly.")
 
-	isConfirmed := askForConfirmation()
+	isConfirmed := utils.AskForConfirmation()
 	if !isConfirmed {
 		log.Fatal("Operation cancelled")
 		return
@@ -103,22 +134,4 @@ func purgeStacks(globalPattern string) {
 		// @TODO STEP 2: Poll for the status of the deletions
 		// @TODO STEP 3: If stack deletion fails because of a dependency (another stack), retry step 1 and 2 after a delay
 	}
-}
-
-func askForConfirmation() bool {
-	var s string
-
-	fmt.Printf("(y/N): ")
-	_, err := fmt.Scan(&s)
-	if err != nil {
-		panic(err)
-	}
-
-	s = strings.TrimSpace(s)
-	s = strings.ToLower(s)
-
-	if s == "y" || s == "yes" {
-		return true
-	}
-	return false
 }

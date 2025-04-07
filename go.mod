@@ -6,7 +6,7 @@ toolchain go1.24.2
 
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.29.12
-	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.59.0
+	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.59.1
 	github.com/urfave/cli/v2 v2.27.6
 )
 

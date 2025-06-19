@@ -12,7 +12,8 @@ suffix, or contain a string in their name.
 ## Installation
 
 ```
-brew install --formula https://raw.githubusercontent.com/Dzhuneyt/cf-purge/main/.brew/cf-purge.rb
+brew tap dzhuneyt/cf-purge
+brew install cf-purge
 ```
 
 Or grab one of the [latest releases](https://github.com/Dzhuneyt/cf-purge/releases).

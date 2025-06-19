@@ -27,17 +27,16 @@ jobs:
       - name: Get latest release tag
         id: get_latest_tag
         run: |
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
           echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
 
       - name: Bump patch version
         id: bump_version
         run: |
           latest_tag=${{ steps.get_latest_tag.outputs.latest_tag }}
-          version=${latest_tag#v}
-          IFS='.' read -r major minor patch <<< "$version"
+          IFS='.' read -r major minor patch <<< "$latest_tag"
           patch=$((patch+1))
-          new_tag="v${major}.${minor}.${patch}"
+          new_tag="${major}.${minor}.${patch}"
           echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release

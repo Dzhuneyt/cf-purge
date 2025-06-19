@@ -12,7 +12,7 @@ suffix, or contain a string in their name.
 ## Installation
 
 ```
-brew tap dzhuneyt/cf-purge
+brew tap dzhuneyt/tap
 brew install cf-purge
 ```
 

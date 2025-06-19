@@ -15,6 +15,83 @@ import (
 
 // @TODO Cleanup this file and split it into multiple files
 
+func deleteStacks(client *cloudformation.Client, stacks []string) {
+	for _, stack := range stacks {
+		fmt.Printf("Deleting stack %s\n", stack)
+		_, err := client.DeleteStack(context.TODO(), &cloudformation.DeleteStackInput{
+			StackName: &stack,
+		})
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// @TODO STEP 1: Wait for all deletions to start
+		// @TODO STEP 2: Poll for the status of the deletions
+		// @TODO STEP 3: If stack deletion fails because of a dependency (another stack), retry step 1 and 2 after a delay
+	}
+}
+
+func newCloudFormationClient() (*cloudformation.Client, error) {
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	if err != nil {
+		return nil, fmt.Errorf("failed to load AWS configuration: %w", err)
+	}
+
+	// Check if AWS credentials are available
+	if _, err = cfg.Credentials.Retrieve(context.TODO()); err != nil {
+		return nil, fmt.Errorf("failed to retrieve AWS credentials: %w", err)
+	}
+
+	return cloudformation.NewFromConfig(cfg), nil
+}
+
+var blacklistedStatuses = []string{
+	"CREATE_IN_PROGRESS",
+	"DELETE_IN_PROGRESS",
+	"DELETE_COMPLETE",
+	// TODO add more statuses if needed
+}
+
+func filterStacks(client *cloudformation.Client, pattern string) []string {
+	paginator := cloudformation.NewListStacksPaginator(client, &cloudformation.ListStacksInput{})
+	stacks := make([]string, 0)
+
+	for paginator.HasMorePages() {
+		output, err := paginator.NextPage(context.TODO())
+		if err != nil {
+			log.Fatal(err)
+			return nil
+		}
+		for _, stack := range output.StackSummaries {
+			stackName := *stack.StackName
+
+			// Check if the stack name matches the glob pattern
+			matched, _ := filepath.Match(pattern, stackName)
+			if !matched {
+				continue
+			}
+
+			// Check if the stack is in any of the denylisted status
+			isBlackListed := false
+			for _, status := range blacklistedStatuses {
+				if status == string(stack.StackStatus) {
+					fmt.Printf("Skipping stack %s with status %s\n", stackName, stack.StackStatus)
+					isBlackListed = true
+					break
+				}
+			}
+
+			if isBlackListed {
+				continue
+			}
+
+			stacks = append(stacks, stackName)
+		}
+	}
+
+	return stacks
+}
+
 func main() {
 	app := &cli.App{
 		Name:  "cf-purge",
@@ -40,98 +117,33 @@ func main() {
 }
 
 func purgeStacks(globalPattern string) {
-	// Load credentials from the environment
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+	cloudformationClient, err := newCloudFormationClient()
 	if err != nil {
-		log.Fatal("Failed to load AWS configuration:", err)
+		log.Fatal(err)
 	}
 
-	// Check if AWS credentials are available
-	_, err = cfg.Credentials.Retrieve(context.TODO())
-	if err != nil {
-		log.Fatal("Failed to retrieve AWS credentials:", err)
-	}
+	stacks := filterStacks(cloudformationClient, globalPattern)
 
-	cloudformationClient := cloudformation.NewFromConfig(cfg)
-
-	paginator := cloudformation.NewListStacksPaginator(cloudformationClient, &cloudformation.ListStacksInput{})
-	pageNum := 0
-
-	stacks := make([]string, 0)
-
-	for paginator.HasMorePages() {
-		output, err := paginator.NextPage(context.TODO())
-		if err != nil {
-			log.Fatal(err)
-			return
-		}
-		for _, stack := range output.StackSummaries {
-			stackName := *stack.StackName
-
-			// Check if the stack name matches the glob pattern
-			matched, _ := filepath.Match(globalPattern, stackName)
-			if !matched {
-				continue
-			}
-
-			// Check if the stack is in any of the denylisted status
-			var blacklistedStatuses = []string{
-				"CREATE_IN_PROGRESS",
-				"DELETE_IN_PROGRESS",
-				"DELETE_COMPLETE",
-				// TODO add more statuses if needed
-			}
-
-			isBlackListed := false
-			for _, status := range blacklistedStatuses {
-				if status == string(stack.StackStatus) {
-					fmt.Printf("Skipping stack %s with status %s\n", stackName, stack.StackStatus)
-					isBlackListed = true
-					break
-				}
-			}
-
-			if isBlackListed {
-				continue
-			}
-
-			stacks = append(stacks, stackName)
-		}
-		pageNum++
-	}
-
-	fmt.Println("Glob pattern matched the following stacks:")
-
-	fmt.Println("----------------------------------------")
-	// Print the list of stacks, one per line
-	for _, stack := range stacks {
-		fmt.Println(stack)
-	}
-	fmt.Println("----------------------------------------")
-
-	fmt.Printf("This operation will delete %d stacks", len(stacks))
-	fmt.Println()
-	fmt.Print("THIS OPERATION IS DESTRUCTIVE AND IRREVERSIBLE")
-	fmt.Println()
-	fmt.Println("Please, confirm that you want to delete these stacks irreversibly.")
-
-	isConfirmed := utils.AskForConfirmation()
+	isConfirmed := confirmStackDeletion(stacks)
 	if !isConfirmed {
 		log.Fatal("Operation cancelled")
 		return
 	}
 
-	for _, stack := range stacks {
-		fmt.Printf("Deleting stack %s\n", stack)
-		_, err := cloudformationClient.DeleteStack(context.TODO(), &cloudformation.DeleteStackInput{
-			StackName: &stack,
-		})
-		if err != nil {
-			log.Fatal(err)
-		}
+	deleteStacks(cloudformationClient, stacks)
+}
 
-		// @TODO STEP 1: Wait for all deletions to start
-		// @TODO STEP 2: Poll for the status of the deletions
-		// @TODO STEP 3: If stack deletion fails because of a dependency (another stack), retry step 1 and 2 after a delay
+func confirmStackDeletion(stacks []string) bool {
+	fmt.Println("Glob pattern matched the following stacks:")
+	fmt.Println("----------------------------------------")
+	for _, stack := range stacks {
+		fmt.Println(stack)
 	}
+	fmt.Println("----------------------------------------")
+
+	fmt.Printf("This operation will delete %d stacks\n", len(stacks))
+	fmt.Println("THIS OPERATION IS DESTRUCTIVE AND IRREVERSIBLE")
+	fmt.Println("Please, confirm that you want to delete these stacks irreversibly.")
+
+	return utils.AskForConfirmation()
 }

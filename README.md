@@ -9,35 +9,13 @@ suffix, or contain a string in their name.
 
 # Usage
 
-**Download**
+## Installation
 
-_MacOS:_
-
-```bash
-curl -Lof cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-darwin-$(uname -m)"
-chmod +x cf-purge
-sudo mv cf-purge /usr/local/bin/
+```
+brew install --formula https://raw.githubusercontent.com/Dzhuneyt/cf-purge/main/.brew/cf-purge.rb
 ```
 
-_Linux:_
-
-```bash
-architecture=""
-case $(uname -m) in
-    i386 | i686)   architecture="386" ;;
-    x86_64) architecture="amd64" ;;
-    arm)    dpkg --print-architecture | grep -q "arm64" && architecture="arm64" || architecture="arm64" ;;
-    *)   echo "Unable to determine system architecture."; exit 1 ;;
-esac
-curl -Lof cf-purge "https://github.com/Dzhuneyt/cf-purge/releases/latest/download/cf-purge-linux-${architecture}"
-chmod +x cf-purge
-sudo mv cf-purge /usr/local/bin/
-```
-
-_Windows:_
-
-Just grab the latest .exe from the [Releases](https://github.com/Dzhuneyt/cf-purge/releases) page, based on your CPU
-architecture.
+Or grab one of the [latest releases](https://github.com/Dzhuneyt/cf-purge/releases).
 
 **Usage**
 

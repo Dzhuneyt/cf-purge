@@ -34,8 +34,8 @@ cf-purge --glob "my-stack-*" # Deletes all stacks that start with "my-stack-"
 # Roadmap
 
 - [ ] Handle delete failures due to stack dependencies
-- [ ] Delete by prefix or suffix, not just by glob pattern
-- [ ] CI (GH Actions) to auto publish binaries + update documentation to simplify usage of the tool
+- [X] Delete by prefix or suffix, not just by glob pattern
+- [X] CI to autopublish to HomeBrew for easier installation and usage
 
 # Contributions
 

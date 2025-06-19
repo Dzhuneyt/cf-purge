@@ -35,15 +35,12 @@ func main() {
 }
 
 func purgeStacks(globalPattern string) {
-	client, err := aws.NewCloudFormationClient()
-	if err != nil {
-		log.Fatal(err)
-	}
+	client := aws.NewCloudFormationClient()
 
 	stacks := stack.FilterStacks(client, globalPattern)
 
 	if !prompt.ConfirmStackDeletion(stacks) {
-		log.Fatal("Operation cancelled")
+		log.Fatalf("Operation cancelled")
 	}
 
 	stack.DeleteStacks(client, stacks)

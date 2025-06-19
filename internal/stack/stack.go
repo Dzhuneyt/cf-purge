@@ -24,8 +24,7 @@ func FilterStacks(client *cloudformation.Client, pattern string) []string {
 	for paginator.HasMorePages() {
 		output, err := paginator.NextPage(context.TODO())
 		if err != nil {
-			log.Fatal(err)
-			return nil
+			log.Fatalf("Failed to list stacks: %v", err)
 		}
 
 		for _, stack := range output.StackSummaries {
@@ -66,7 +65,7 @@ func DeleteStacks(client *cloudformation.Client, stacks []string) {
 			StackName: &stack,
 		})
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Failed to delete stack %s: %v", stack, err)
 		}
 
 		// @TODO STEP 1: Wait for all deletions to start

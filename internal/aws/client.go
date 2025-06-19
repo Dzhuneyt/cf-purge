@@ -2,22 +2,22 @@ package aws
 
 import (
 	"context"
-	"fmt"
+	"log"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/cloudformation"
 )
 
-func NewCloudFormationClient() (*cloudformation.Client, error) {
+func NewCloudFormationClient() *cloudformation.Client {
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
-		return nil, fmt.Errorf("failed to load AWS configuration: %w", err)
+		log.Fatalf("Failed to load AWS configuration: %v", err)
 	}
 
 	// Check if AWS credentials are available
 	if _, err = cfg.Credentials.Retrieve(context.TODO()); err != nil {
-		return nil, fmt.Errorf("failed to retrieve AWS credentials: %w", err)
+		log.Fatalf("Failed to retrieve AWS credentials: %v", err)
 	}
 
-	return cloudformation.NewFromConfig(cfg), nil
+	return cloudformation.NewFromConfig(cfg)
 }

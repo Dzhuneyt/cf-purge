@@ -3,6 +3,10 @@
 name: Release
 
 on:
+  push:
+    branches:
+      - main
+  # Still allow manual release trigger if needed
   release:
     types: [ created ]
 
@@ -11,12 +15,47 @@ permissions:
   packages: write
 
 jobs:
+  release-patch:
+    name: Automated Patch Release
+    runs-on: ubuntu-latest
+    outputs:
+      new_tag: ${{ steps.bump_version.outputs.new_tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get latest release tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+
+      - name: Bump patch version
+        id: bump_version
+        run: |
+          latest_tag=${{ steps.get_latest_tag.outputs.latest_tag }}
+          version=${latest_tag#v}
+          IFS='.' read -r major minor patch <<< "$version"
+          patch=$((patch+1))
+          new_tag="v${major}.${minor}.${patch}"
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.bump_version.outputs.new_tag }}
+          name: Release ${{ steps.bump_version.outputs.new_tag }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   releases-matrix:
     name: Release Go Binary
+    needs: release-patch
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
         goos: [ linux, windows, darwin ]
         goarch: [ "386", amd64, arm64 ]
         exclude:
@@ -35,3 +74,4 @@ jobs:
           extra_files: LICENSE README.md
           compress_assets: "OFF"
           asset_name: cf-purge-${{ matrix.goos }}-${{ matrix.goarch }}
+          release_tag: ${{ needs.release-patch.outputs.new_tag }}

@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+
 	"github.com/Dzhuneyt/cf-purge/utils"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/cloudformation"
 	"github.com/urfave/cli/v2"
-	"log"
-	"os"
-	"path/filepath"
 )
 
 // @TODO Cleanup this file and split it into multiple files
@@ -77,7 +78,6 @@ func purgeStacks(globalPattern string) {
 			var blacklistedStatuses = []string{
 				"CREATE_IN_PROGRESS",
 				"DELETE_IN_PROGRESS",
-				"DELETE_FAILED",
 				"DELETE_COMPLETE",
 				// TODO add more statuses if needed
 			}

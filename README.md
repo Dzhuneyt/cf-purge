@@ -1,15 +1,18 @@
 ![](./docs/cf-purge.webp)
 
-# CF Purge
+# CF Purge Monorepo
 
-Quickly delete multiple CloudFormation stacks as a bulk operation.
+This repository is now structured as a **monorepo**. The main Go CLI app is located in the `core/` folder. Other projects (such as a website) will live in sibling directories.
 
-Delete stacks that start with a prefix, end with a
-suffix, or contain a string in their name.
+## Structure
 
-# Usage
+- `core/` — Go CLI app for bulk-deleting CloudFormation stacks
+- `website/` — (Coming soon) Static website/landing page (e.g., Hugo)
+- `docs/` — Documentation assets
 
-## Installation
+## Go CLI Usage
+
+### Installation
 
 ```
 brew tap dzhuneyt/tap
@@ -20,10 +23,7 @@ Or grab one of the [latest releases](https://github.com/Dzhuneyt/cf-purge/releas
 
 **Usage**
 
-cf-purge is a command-line tool. It takes a single argument - a glob pattern string that matches the CloudFormation
-stack names you want to delete.
-
-Some examples:
+From anywhere (after install), usage is unchanged:
 
 ```bash
 cf-purge --glob "*-some-glob-pattern-*" # Deletes all stacks that match the glob pattern

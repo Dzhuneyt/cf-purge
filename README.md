@@ -217,7 +217,6 @@ Please, confirm that you want to delete these stacks irreversibly.
 ### Current Limitations
 - ❌ Stack deletion failures require manual intervention (see roadmap)
 - ❌ No progress indicator for long-running operations
-- ❌ Limited to glob pattern matching (regex support planned)
 - ❌ No dry-run mode (planned feature)
 
 ### Best Practices

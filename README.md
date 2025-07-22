@@ -276,13 +276,6 @@ go run main.go --help
 6. Push to your fork: `git push origin feature/your-feature-name`
 7. Submit a pull request with a clear description
 
-## Related Tools
-
-- [AWS CLI CloudFormation](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/) - Official AWS CLI for CloudFormation
-- [cfn-lint](https://github.com/aws-cloudformation/cfn-lint) - CloudFormation template validation
-- [aws-nuke](https://github.com/rebuy-de/aws-nuke) - Nuclear option for AWS account cleanup
-- [cfn-teardown](https://github.com/cloudtools/cfn-teardown) - Alternative stack deletion tool
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -5,7 +5,7 @@ description: "About this site"
 
 <div class="prose prose-slate">
 
-[← Back to Home]({{< relref "/_index.md" >}})
+<a href="{{< relref "/_index.md" >}}" class="inline-block bg-blue-700 text-white px-5 py-2 rounded-md shadow hover:bg-blue-800 transition no-underline mb-6">← Back to Home</a>
 
 
 CF-Purge was created to solve a common pain point for teams using AWS CloudFormation and the AWS CDK: cleaning up multiple stacks quickly and safely.

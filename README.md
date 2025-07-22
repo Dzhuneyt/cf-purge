@@ -25,7 +25,7 @@ This tool will prompt you for confirmation before deleting any stacks, but **del
 This repository is structured as a **monorepo**:
 
 - `core/` — Go CLI app for bulk-deleting CloudFormation stacks
-- `website/` — (Coming soon) Static website/landing page
+- `website/` — Static website/landing page
 - `docs/` — Documentation assets
 
 ## Prerequisites
@@ -272,7 +272,7 @@ go run main.go --help
 - 📖 Improve documentation
 - 🧪 Add test cases
 - ⚡ Implement features from the roadmap
-- 🎨 Enhance the website (coming soon)
+- 🎨 Enhance the website
 
 ### Pull Request Process
 

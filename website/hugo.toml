@@ -1,0 +1,4 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'CF Purge - CLI tool to purge CloudFormation stacks in bulk'
+theme = 'ananke'

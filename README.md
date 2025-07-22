@@ -1,6 +1,6 @@
 ![](./docs/cf-purge.webp)
 
-# CF Purge Monorepo
+# CF Purge
 
 This repository is now structured as a **monorepo**. The main Go CLI app is located in the `core/` folder. Other projects (such as a website) will live in sibling directories.
 

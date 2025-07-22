@@ -200,18 +200,6 @@ Please, confirm that you want to delete these stacks irreversibly.
   - Test your pattern with a broader glob first
   - Check for typos in the pattern
 
-### Best Practices for Pattern Testing
-
-Before running CF Purge, test your glob pattern:
-
-```bash
-# List all stacks to see available names
-aws cloudformation list-stacks --query 'StackSummaries[].StackName' --output table
-
-# Test pattern matching with AWS CLI
-aws cloudformation list-stacks --query 'StackSummaries[?contains(StackName, `your-pattern`)].StackName' --output table
-```
-
 ### Getting Help
 
 - 📖 Check [Issues](https://github.com/Dzhuneyt/cf-purge/issues) for similar problems

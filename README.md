@@ -212,7 +212,7 @@ Please, confirm that you want to delete these stacks irreversibly.
 ### Performance Characteristics
 - ⚡ Processes stacks sequentially to avoid AWS API throttling
 - 🕐 Large numbers of stacks may take several minutes to delete
-- 🔒 No parallel deletion to ensure safe operation and proper confirmation
+- 🔒 No parallel deletion to ensure safe operation and proper confirmation (parallel deletion with configurable concurrency is planned for future releases)
 
 ### Current Limitations
 - ❌ Stack deletion failures require manual intervention (see roadmap)

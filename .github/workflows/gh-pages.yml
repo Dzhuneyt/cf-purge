@@ -24,6 +24,9 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
+      - name: Clean public directory
+        run: rm -rf website/public
+
       - name: Build Hugo site
         run: hugo --source website --destination public --baseURL "https://dzhuneyt.github.io/cf-purge/"
 

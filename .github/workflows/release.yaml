@@ -80,7 +80,7 @@ jobs:
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
           binary_name: "cf-purge"
-          extra_files: ../LICENSE ../README.md
+          extra_files: ${{ github.workspace }}/LICENSE ${{ github.workspace }}/README.md
           compress_assets: "OFF"
           asset_name: cf-purge-${{ matrix.goos }}-${{ matrix.goarch }}
           release_tag: ${{ needs.release-patch.outputs.new_tag }}

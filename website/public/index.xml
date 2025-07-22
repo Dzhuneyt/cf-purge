@@ -1,11 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>CF Purge - CLI tool to purge CloudFormation stacks in bulk</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on CF Purge - CLI tool to purge CloudFormation stacks in bulk</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>🚀 CF-Purge on CF-Purge</title><link>http://localhost:1313/</link><description>Recent content in 🚀 CF-Purge on CF-Purge</description><generator>Hugo</generator><language>en-us</language><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>http://localhost:1313/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/about/</guid><description>&lt;div class="prose prose-slate">
+&lt;p>&lt;a href="http://localhost:1313/" class="inline-block bg-blue-700 text-white px-5 py-2 rounded-md shadow hover:bg-blue-800 transition no-underline mb-6">← Back to Home&lt;/a>&lt;/p>
+&lt;p>CF-Purge was created to solve a common pain point for teams using AWS CloudFormation and the AWS CDK: cleaning up multiple stacks quickly and safely.&lt;/p>
+&lt;h3 id="why-did-i-build-this-tool">Why did I build this tool?&lt;/h3>
+&lt;p>When working with the AWS CDK, it&amp;rsquo;s common for a project to create many CloudFormation stacks—sometimes 10 or more per environment. If a developer leaves the project, their environment (with all its stacks) needs to be deleted. Manually finding and deleting these stacks in the AWS Console is tedious and error-prone.&lt;/p></description></item><item><title>Navigation</title><link>http://localhost:1313/nav/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/nav/</guid><description/></item></channel></rss>

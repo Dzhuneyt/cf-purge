@@ -1,0 +1,13 @@
+# Node and package manager
+node_modules
+
+# Hugo build artefacts
+public/
+resources/
+.hugo_build.lock
+.cache/
+.hugo_build/
+
+# System files
+.DS_Store
+.env

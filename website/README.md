@@ -10,24 +10,40 @@ This `website` subfolder is dedicated to the static site, powered by Hugo. It co
 ### Prerequisites
 - [Hugo](https://gohugo.io/getting-started/installing/) installed on your system.
 
-### Running Locally
+### Tailwind CSS Workflow
 
-1. Open a terminal and navigate to this directory:
+This project uses [Tailwind CSS](https://tailwindcss.com/) via the Tailwind CLI. **You must pre-compile your CSS before serving or building the site.**
+
+#### Local Development
+1. In one terminal, start the Tailwind CLI in watch mode:
    ```sh
-   cd website
+   pnpm run tailwind:dev
    ```
-2. Start the Hugo development server:
+   This will rebuild `static/css/style.css` whenever you change content, layouts, or Tailwind config.
+2. In another terminal, start the Hugo development server:
    ```sh
    hugo server -D
    ```
 3. Open your browser and go to the address shown in the terminal (usually http://localhost:1313).
 
-### Building for Production
-To generate the static files for deployment:
+#### Building for Production
+Before running the Hugo build, generate the production (minified) CSS:
 ```sh
+pnpm run tailwind:build
 hugo
 ```
-The output will be in the `public/` directory.
+- The output will be in the `public/` directory, ready for deployment.
+- Make sure to commit the latest `static/css/style.css` if your deployment pipeline does not run the Tailwind build step automatically.
+
+#### CI / Automated Production Builds
+If building in CI, add a pre-build step:
+```sh
+pnpm install --frozen-lockfile
+pnpm run tailwind:build
+hugo
+```
+- Ensure Node.js, PNPM, and Hugo are available in your CI environment.
+- You can cache `node_modules` for faster builds.
 
 ## More Information
 - See the main project README for overall project details.

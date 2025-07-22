@@ -1,4 +1,11 @@
-baseURL = 'https://example.org/'
+baseURL = 'http://localhost:1313/'
 languageCode = 'en-us'
-title = 'CF Purge - CLI tool to purge CloudFormation stacks in bulk'
-theme = 'ananke'
+title = 'CF-Purge'
+
+[params]
+subtitle = 'Clean CloudFormation stacks in bulk'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

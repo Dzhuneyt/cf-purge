@@ -42,6 +42,6 @@ brew install cf-purge</code></pre>
 
 <div class="flex gap-4">
   <a href="https://github.com/Dzhuneyt/cf-purge" target="_blank" class="bg-blue-700 text-white px-6 py-3 rounded-md font-bold text-base shadow hover:bg-blue-800 transition">GitHub</a>
-  [Learn More]({{< relref "/about.md" >}})
+  <a href="{{< relref "/about.md" >}}" class="bg-gray-100 text-gray-800 px-6 py-3 rounded-md font-bold text-base shadow hover:bg-gray-200 transition">Learn More</a>
 
 </div>

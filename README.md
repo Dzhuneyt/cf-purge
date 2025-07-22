@@ -193,10 +193,6 @@ Please, confirm that you want to delete these stacks irreversibly.
   - Manually resolve resource dependencies
   - Disable deletion protection on protected resources
 
-#### "Stack does not exist" Warning
-- **Cause**: Stack was already deleted or name mismatch
-- **Solution**: Verify stack names with `aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE`
-
 #### No Stacks Match Pattern
 - **Cause**: Glob pattern doesn't match any existing stack names
 - **Solution**: 

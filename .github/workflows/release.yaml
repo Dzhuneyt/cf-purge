@@ -67,12 +67,8 @@ jobs:
             goos: windows
     steps:
       - uses: actions/checkout@v4
-      - name: List files for debug
-        run: |
-          echo "Listing ./core directory:"
-          ls -al .
-          echo "Listing parent directory (repo root):"
-          ls -al ..
+      - name: Copy LICENSE and README.md into core
+        run: cp ../LICENSE ../README.md .
         working-directory: core
       - uses: wangyoucao577/go-release-action@v1.53
         with:
@@ -80,7 +76,7 @@ jobs:
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
           binary_name: "cf-purge"
-          extra_files: ${{ github.workspace }}/LICENSE ${{ github.workspace }}/README.md
+          extra_files: LICENSE README.md
           compress_assets: "OFF"
           asset_name: cf-purge-${{ matrix.goos }}-${{ matrix.goarch }}
           release_tag: ${{ needs.release-patch.outputs.new_tag }}

@@ -227,14 +227,23 @@ Please, confirm that you want to delete these stacks irreversibly.
 
 ## Roadmap
 
+### ✅ Completed Features
+- [x] ✅ Delete by prefix or suffix, not just by glob pattern
+- [x] ✅ CI to auto-publish to HomeBrew for easier installation and usage
+
+### 🚀 Planned Features (Priority Order)
+
+#### High Priority
 - [ ] **Dry-run mode** - Preview which stacks would be deleted without actually deleting them
 - [ ] **Handle delete failures** due to stack dependencies with automatic retries
 - [ ] **Progress indicators** for long-running operations
-- [ ] **Regex pattern support** in addition to glob patterns
+
+#### Medium Priority
 - [ ] **Parallel deletion** with configurable concurrency
 - [ ] **Stack filtering** by tags, creation date, or status
-- [x] ✅ Delete by prefix or suffix, not just by glob pattern
-- [x] ✅ CI to auto-publish to HomeBrew for easier installation and usage
+
+#### Future Enhancements
+- [ ] **Regex pattern support** in addition to glob patterns
 
 ## Contributing
 

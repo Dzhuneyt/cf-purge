@@ -67,6 +67,13 @@ jobs:
             goos: windows
     steps:
       - uses: actions/checkout@v4
+      - name: List files for debug
+        run: |
+          echo "Listing ./core directory:"
+          ls -al .
+          echo "Listing parent directory (repo root):"
+          ls -al ..
+        working-directory: core
       - uses: wangyoucao577/go-release-action@v1.53
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

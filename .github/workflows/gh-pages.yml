@@ -28,7 +28,7 @@ jobs:
         run: rm -rf website/public
 
       - name: Build Hugo site
-        run: hugo --source website --destination public --baseURL "https://dzhuneyt.github.io/cf-purge/"
+        run: hugo --source website --destination public --baseURL "https://cf-purge.app"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

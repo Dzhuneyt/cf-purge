@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>🚀 CF-Purge on CF-Purge</title>
+    <link>https://cf-purge.app/</link>
+    <description>Recent content in 🚀 CF-Purge on CF-Purge</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="https://cf-purge.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://cf-purge.app/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://cf-purge.app/about/</guid>
+      <description>&lt;div class=&#34;prose prose-slate&#34;&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://cf-purge.app/&#34; class=&#34;inline-block bg-blue-700 text-white px-5 py-2 rounded-md shadow hover:bg-blue-800 transition no-underline mb-6&#34;&gt;← Back to Home&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;CF-Purge was created to solve a common pain point for teams using AWS CloudFormation and the AWS CDK: cleaning up multiple stacks quickly and safely.&lt;/p&gt;&#xA;&lt;h3 id=&#34;why-did-i-build-this-tool&#34;&gt;Why did I build this tool?&lt;/h3&gt;&#xA;&lt;p&gt;When working with the AWS CDK, it&amp;rsquo;s common for a project to create many CloudFormation stacks—sometimes 10 or more per environment. If a developer leaves the project, their environment (with all its stacks) needs to be deleted. Manually finding and deleting these stacks in the AWS Console is tedious and error-prone.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Navigation</title>
+      <link>https://cf-purge.app/nav/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://cf-purge.app/nav/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

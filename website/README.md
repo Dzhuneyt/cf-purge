@@ -35,15 +35,8 @@ hugo
 - The output will be in the `public/` directory, ready for deployment.
 - Make sure to commit the latest `static/css/style.css` if your deployment pipeline does not run the Tailwind build step automatically.
 
-#### CI / Automated Production Builds
-If building in CI, add a pre-build step:
-```sh
-pnpm install --frozen-lockfile
-pnpm run tailwind:build
-hugo
-```
-- Ensure Node.js, PNPM, and Hugo are available in your CI environment.
-- You can cache `node_modules` for faster builds.
+#### Production Deployment
+Production deploys are handled by Vercel via native Git integration — every push to `main` triggers an automatic build. Build settings live in `vercel.json` (framework, install/build commands, output directory). The Hugo version is pinned via a `HUGO_VERSION` environment variable in the Vercel project settings. No CI workflow to maintain in this repo.
 
 ## More Information
 - See the main project README for overall project details.
